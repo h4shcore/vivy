@@ -16,7 +16,7 @@ An **Image Viewer** made with **C++** and **SDL**.
 > You need **SDL** and **cmake** installed to **build**.
 
 > [!TIP]
-> use nix instead.
+> use **nix** instead.
 >
 > ```sh
 > nix-develop -c <bash or your fav shell>
