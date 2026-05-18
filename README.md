@@ -1,16 +1,26 @@
 # VIVY
 
-An <b>Image Viewer</b> made with <b>C++</b> and <b>SDL</b>
+An **Image Viewer** made with **C++** and **SDL**.
 
 ### FEATURES:
 
 - loads external images
-- automatic sizing
+- automatic sizing (need to make it more optimal)
 - GPU rendering
 - keyboard controls
 - zooming
 - event loop
 - native windowing
+
+> [!NOTE]
+> You need **SDL** and **cmake** installed to **build**.
+
+> [!TIP]
+> use nix instead.
+>
+> ```sh
+> nix-develop -c <bash or your fav shell>
+> ```
 
 ### BUILD:
 
