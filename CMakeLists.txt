@@ -15,3 +15,7 @@ target_link_libraries(vivy
     SDL2::SDL2
     SDL2_image::SDL2_image
 )
+
+# nix
+include(GNUInstallDirs)
+install(TARGETS vivy DESTINATION ${CMAKE_INSTALL_BINDIR})
