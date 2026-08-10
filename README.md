@@ -2,7 +2,7 @@
 
 A fast, minimalist, GPU-accelerated image viewer built with **C++20** and **SDL2**.
 
-Designed to be lightweight and seamlessly blend into keyboard-driven tiling window managers (dwm,Hyprland, Niri, Sway, i3, bspwm) and Wayland/X11 desktop setups.
+Designed to be lightweight and seamlessly blend into keyboard-driven tiling window managers (dwm, Hyprland, Niri, Sway, i3, bspwm) and Wayland/X11 desktop setups.
 
 ---
 
@@ -12,7 +12,8 @@ Designed to be lightweight and seamlessly blend into keyboard-driven tiling wind
 - **Cursor-Centric Zoom:** Smooth zooming directly relative to your mouse pointer.
 - **Pan & Drag:** Smooth mouse dragging for navigating large images.
 - **Auto-Fit:** Automatically scales and centers images to fit window bounds upon opening or resizing.
-- **Flake Ready:** Run instantly anywhere using Nix without manual dependency setup.
+- **XDG & Desktop Integration:** Automatically installs a `.desktop` file for file manager and `xdg-open` integration.
+- **Flake Ready:** Install or run instantly anywhere using Nix without manual dependency setup.
 
 ---
 
@@ -28,41 +29,116 @@ Designed to be lightweight and seamlessly blend into keyboard-driven tiling wind
 
 ---
 
-## Quick Start (Nix)
+## CLI Options
 
-Run `vivy` directly from GitHub without compiling manually:
+Running `vivy` without arguments or with help flags displays usage info in your terminal:
+
+```text
+Usage:
+  vivy <image_path>
+  vivy [options]
+
+Options:
+  -h, --help     Show usage and control information
+  -v, --version  Display version information
+
+```
+
+---
+
+## Installation
+
+### Method 1: Nix (Recommended)
+
+**Run without installing:**
 
 ```bash
 nix run github:h4shcore/vivy -- path/to/image.png
 
 ```
 
+**Install to user profile:**
+
+```bash
+nix profile install github:h4shcore/vivy
+
+```
+
+**NixOS Flake:**
+Add `vivy` to your inputs and system packages:
+
+```nix
+environment.systemPackages = [
+  inputs.vivy.packages.${pkgs.system}.default
+];
+
+```
+
+**Home Manager:**
+Add `vivy` to your inputs and home packages:
+
+```nix
+home.packages= [
+  inputs.vivy.packages.${pkgs.system}.default
+];
+
+xdg.mimeApps = {
+  enable = true;
+  defaultApplications = {
+    "image/png" = [ "vivy.desktop" ];
+    "image/jpeg" = [ "vivy.desktop" ];
+    "image/webp" = [ "vivy.desktop" ];
+    "image/bmp" = [ "vivy.desktop" ];
+  };
+};
+
+```
+
 ---
 
-## Building from Source
+### Method 2: Building from Source
 
-### Dependencies
+#### Dependencies
 
 * C++20 compiler (`g++` or `clang++`)
 * `SDL2`
 * `SDL2_image`
+* `pkg-config`
 * `make`
 
-### Build & Run
+#### Build & Install
 
 ```bash
 # Clone the repository
 git clone [https://github.com/h4shcore/vivy.git](https://github.com/h4shcore/vivy.git)
 cd vivy
 
-# Build binary (output saved to build/vivy)
+# Build binary
 make
 
-# Run with an image
+# Run directly
 make run ARGS="path/to/image.png"
 
+# System-wide install (binary + desktop entry)
+sudo make install
+
+# Uninstall
+sudo make uninstall
+
 ```
---- 
+
+---
+
+## Setting as Default Viewer (`xdg-open`)
+
+Once installed via Nix or `make install`, set `vivy` as your default image viewer with:
+
+```bash
+xdg-mime default vivy.desktop image/png image/jpeg image/webp image/bmp
+
+```
+
+---
 
 ## License
 

@@ -19,17 +19,40 @@
             version = "0.1.0";
             src = ./.;
 
-            nativeBuildInputs = [ pkgs.pkg-config ];
+            nativeBuildInputs = [
+              pkgs.pkg-config
+              pkgs.copyDesktopItems
+            ];
+
             buildInputs = [
               pkgs.SDL2
               pkgs.SDL2_image
             ];
 
+            desktopItems = [
+              (pkgs.makeDesktopItem {
+                name = "vivy";
+                exec = "vivy %f";
+                comment = "Minimalist C++20 SDL2 Image Viewer";
+                desktopName = "vivy";
+                genericName = "Image Viewer";
+                mimeTypes = [
+                  "image/png"
+                  "image/jpeg"
+                  "image/webp"
+                  "image/bmp"
+                ];
+                categories = [ "Graphics" "Viewer" ];
+              })
+            ];
+
             buildPhase = "make";
 
             installPhase = ''
+              runHook preInstall
               mkdir -p $out/bin
               cp build/vivy $out/bin/vivy
+              runHook postInstall
             '';
           };
         });

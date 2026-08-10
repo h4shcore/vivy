@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=vivy
+Comment=Fast, minimalist GPU-accelerated image viewer
+Exec=vivy %f
+MimeType=image/png;image/jpeg;image/webp;image/bmp;
+Terminal=false
+Categories=Graphics;Viewer;
