@@ -68,6 +68,22 @@ nix profile install github:h4shcore/vivy
 Add `vivy` to your inputs and system packages:
 
 ```nix
+{
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    # Add vivy as a flake input
+    vivy.url = "github:h4shcore/vivy";
+  };
+
+  outputs = { self, nixpkgs, vivy, ... }@inputs: {
+    # System or Home Manager output definitions...
+  };
+}
+
+```
+
+```nix
 environment.systemPackages = [
   inputs.vivy.packages.${pkgs.system}.default
 ];
