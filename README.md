@@ -64,6 +64,13 @@ nix profile install github:h4shcore/vivy
 
 ```
 
+**Local Development Shell:**
+
+```bash
+nix develop
+
+```
+
 **NixOS Flake:**
 Add `vivy` to your inputs and system packages:
 
@@ -94,7 +101,7 @@ environment.systemPackages = [
 Add `vivy` to your inputs and home packages:
 
 ```nix
-home.packages= [
+home.packages = [
   inputs.vivy.packages.${pkgs.system}.default
 ];
 
@@ -117,29 +124,29 @@ xdg.mimeApps = {
 #### Dependencies
 
 * C++20 compiler (`g++` or `clang++`)
+* `CMake` (>= 3.16)
 * `SDL2`
 * `SDL2_image`
 * `pkg-config`
-* `make`
 
 #### Build & Install
 
 ```bash
 # Clone the repository
-git clone [https://github.com/h4shcore/vivy.git](https://github.com/h4shcore/vivy.git)
+git clone https://github.com/h4shcore/vivy.git
 cd vivy
 
-# Build binary
-make
+# Configure the build
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+# Compile binary
+cmake --build build
 
 # Run directly
-make run ARGS="path/to/image.png"
+./build/vivy path/to/image.png
 
 # System-wide install (binary + desktop entry)
-sudo make install
-
-# Uninstall
-sudo make uninstall
+sudo cmake --install build
 
 ```
 
@@ -147,7 +154,7 @@ sudo make uninstall
 
 ## Setting as Default Viewer (`xdg-open`)
 
-Once installed via Nix or `make install`, set `vivy` as your default image viewer with:
+Once installed via Nix or `cmake --install`, set `vivy` as your default image viewer with:
 
 ```bash
 xdg-mime default vivy.desktop image/png image/jpeg image/webp image/bmp
