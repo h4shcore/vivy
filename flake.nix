@@ -20,6 +20,7 @@
             src = ./.;
 
             nativeBuildInputs = [
+              pkgs.cmake
               pkgs.pkg-config
               pkgs.copyDesktopItems
             ];
@@ -45,15 +46,6 @@
                 categories = [ "Graphics" "Viewer" ];
               })
             ];
-
-            buildPhase = "make";
-
-            installPhase = ''
-              runHook preInstall
-              mkdir -p $out/bin
-              cp build/vivy $out/bin/vivy
-              runHook postInstall
-            '';
           };
         });
 
